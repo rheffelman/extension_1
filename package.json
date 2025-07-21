@@ -32,71 +32,198 @@
       }
     ],
     "keybindings": [
-      { "key": "q", "command": "ryvim.toInsert", "when": "editorTextFocus && ryvimMode == 'normal'" },
-      { "key": "alt+q", "command": "ryvim.toNormal", "when": "editorTextFocus && (ryvimMode == 'insert' || ryvimMode == 'highlight')" },
-
-      { "key": "w", "command": "ryvim.handleNormalKey", "args": "w", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "a", "command": "ryvim.handleNormalKey", "args": "a", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "s", "command": "ryvim.handleNormalKey", "args": "s", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "d", "command": "ryvim.handleNormalKey", "args": "d", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-
-      { "key": "j", "command": "ryvim.handleNormalKey", "args": "j", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "k", "command": "ryvim.handleNormalKey", "args": "k", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "l", "command": "ryvim.handleNormalKey", "args": "l", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": ";", "command": "ryvim.handleNormalKey", "args": ";", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-
-      { "key": "p", "command": "ryvim.handleNormalKey", "args": "p", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "o", "command": "ryvim.handleNormalKey", "args": "o", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "i", "command": "ryvim.handleNormalKey", "args": "i", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "u", "command": "ryvim.handleNormalKey", "args": "u", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-
-      { "key": "e", "command": "ryvim.handleNormalKey", "args": "e", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "c", "command": "ryvim.handleNormalKey", "args": "c", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "v", "command": "ryvim.handleNormalKey", "args": "v", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "x", "command": "ryvim.handleNormalKey", "args": "x", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-      { "key": "z", "command": "ryvim.handleNormalKey", "args": "z", "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')" },
-
-      { "key": "b", "command": "ryvim.handleNormalKey", "args": "b", "when": "editorTextFocus && ryvimMode == 'normal'" },
-      { "key": "f", "command": "ryvim.handleNormalKey", "args": "f", "when": "editorTextFocus && ryvimMode == 'normal'" },
-      { "key": "shift+f", "command": "ryvim.handleNormalKey", "args": "F", "when": "editorTextFocus && ryvimMode == 'normal'" },
-
-      { "key": "ctrl+shift+q", "command": "ryvim.toNormal", "when": "ryvimMode == 'default'" },
-      { "key": "ctrl+shift+d", "command": "ryvim.toDefault", "when": "editorTextFocus" },
-
+      {
+        "key": "q",
+        "command": "ryvim.toInsert",
+        "when": "editorTextFocus && ryvimMode == 'normal'"
+      },
+      {
+        "key": "alt+q",
+        "command": "ryvim.toNormal",
+        "when": "editorTextFocus && (ryvimMode == 'insert' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "w",
+        "command": "ryvim.handleNormalKey",
+        "args": "w",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "a",
+        "command": "ryvim.handleNormalKey",
+        "args": "a",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "s",
+        "command": "ryvim.handleNormalKey",
+        "args": "s",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "d",
+        "command": "ryvim.handleNormalKey",
+        "args": "d",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "j",
+        "command": "ryvim.handleNormalKey",
+        "args": "j",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "k",
+        "command": "ryvim.handleNormalKey",
+        "args": "k",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "l",
+        "command": "ryvim.handleNormalKey",
+        "args": "l",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": ";",
+        "command": "ryvim.handleNormalKey",
+        "args": ";",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "p",
+        "command": "ryvim.handleNormalKey",
+        "args": "p",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "o",
+        "command": "ryvim.handleNormalKey",
+        "args": "o",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "i",
+        "command": "ryvim.handleNormalKey",
+        "args": "i",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "u",
+        "command": "ryvim.handleNormalKey",
+        "args": "u",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "e",
+        "command": "ryvim.handleNormalKey",
+        "args": "e",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "c",
+        "command": "ryvim.handleNormalKey",
+        "args": "c",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "v",
+        "command": "ryvim.handleNormalKey",
+        "args": "v",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "x",
+        "command": "ryvim.handleNormalKey",
+        "args": "x",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "z",
+        "command": "ryvim.handleNormalKey",
+        "args": "z",
+        "when": "editorTextFocus && (ryvimMode == 'normal' || ryvimMode == 'highlight')"
+      },
+      {
+        "key": "b",
+        "command": "ryvim.handleNormalKey",
+        "args": "b",
+        "when": "editorTextFocus && ryvimMode == 'normal'"
+      },
+      {
+        "key": "f",
+        "command": "ryvim.handleNormalKey",
+        "args": "f",
+        "when": "editorTextFocus && ryvimMode == 'normal'"
+      },
+      {
+        "key": "shift+f",
+        "command": "ryvim.handleNormalKey",
+        "args": "F",
+        "when": "editorTextFocus && ryvimMode == 'normal'"
+      },
+      {
+        "key": "ctrl+shift+q",
+        "command": "ryvim.toNormal",
+        "when": "ryvimMode == 'default'"
+      },
+      {
+        "key": "ctrl+shift+d",
+        "command": "ryvim.toDefault",
+        "when": "editorTextFocus"
+      },
       {
         "key": "1",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "1", "altKey": false },
+        "args": {
+          "key": "1",
+          "altKey": false
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       },
       {
         "key": "alt+1",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "1", "altKey": true },
+        "args": {
+          "key": "1",
+          "altKey": true
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       },
       {
         "key": "2",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "2", "altKey": false },
+        "args": {
+          "key": "2",
+          "altKey": false
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       },
       {
         "key": "alt+2",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "2", "altKey": true },
+        "args": {
+          "key": "2",
+          "altKey": true
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       },
       {
         "key": "3",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "3", "altKey": false },
+        "args": {
+          "key": "3",
+          "altKey": false
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       },
       {
         "key": "alt+3",
         "command": "ryvim.handleNormalKey",
-        "args": { "key": "3", "altKey": true },
+        "args": {
+          "key": "3",
+          "altKey": true
+        },
         "when": "editorTextFocus && ryvimMode == 'normal'"
       }
     ]
@@ -110,14 +237,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.102.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^3.6.0"
   }
 }

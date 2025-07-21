@@ -41,7 +41,6 @@ const cppSnippetsByNibble: Record<number, vscode.SnippetString> = {
   0b0100: new vscode.SnippetString(
     "switch (${1:variable}) {\n\tcase ${2:case}:\n\t\t$0\n\t\tbreak;\n}"
   ),
-  // etc
 };
 
 const rustSnippetsByNibble: Record<number, vscode.SnippetString> = {
@@ -50,14 +49,12 @@ const rustSnippetsByNibble: Record<number, vscode.SnippetString> = {
   0b0010: new vscode.SnippetString("for ${1:item} in ${2:collection}.iter() {\n\t$0\n}"),
   0b0011: new vscode.SnippetString("if ${1:condition} {\n\t$0\n} else {\n\t\n}"),
   0b0100: new vscode.SnippetString("match ${1:expression} {\n\t${2:pattern} => $0,\n\t_ => (),\n}"),
-  // etc
 };
 
-// Global state
-let currentSnippetKey: "1" | "2" | "3" = "2"; // default to C++
+let currentSnippetKey: "1" | "2" | "3" = "2";
 let currentMode: Mode = Mode.Normal;
-let nibbleState: number = 0; // snippet nibble p,o,i,u
-let movementNibble: number = 0; // movement nibble j,k,l,;
+let nibbleState: number = 0;
+let movementNibble: number = 0;
 let pendingModifier: ModifierKey | null = null;
 let modePanel: vscode.WebviewPanel | undefined;
 
@@ -78,15 +75,12 @@ export function activate(context: vscode.ExtensionContext) {
   async function updateCursorStyle(editor: vscode.TextEditor | undefined, mode: Mode) {
     if (!editor) return;
     
-    // Always block cursor shape for Normal/Insert/Highlight
     if (mode === Mode.Normal || mode === Mode.Insert || mode === Mode.Highlight) {
       editor.options = { ...editor.options, cursorStyle: vscode.TextEditorCursorStyle.Block };
     } else if (mode === Mode.Default) {
-      // Default VSCode cursor style (usually line)
       editor.options = { ...editor.options, cursorStyle: vscode.TextEditorCursorStyle.Line };
     }
 
-    // Now update the cursor color via workbench color customizations:
     let color: string | undefined;
     switch (mode) {
       case Mode.Normal:
@@ -103,7 +97,6 @@ export function activate(context: vscode.ExtensionContext) {
         break;
     }
 
-    // Apply color customization globally (or at workspace level)
     const config = vscode.workspace.getConfiguration();
     if (color) {
       await config.update(
@@ -112,7 +105,6 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.ConfigurationTarget.Global
       );
     } else {
-      // Remove the override to restore default theme color
       const existing = config.get<any>("workbench.colorCustomizations") || {};
       if (existing["editorCursor.foreground"]) {
         delete existing["editorCursor.foreground"];
@@ -126,9 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
 
-// Helper: provide human-readable description per key/nibble combo
 function snippetToDescription(key: "1" | "2" | "3", nibble: number) {
-  // Define descriptions with keys as string literals
   const descriptions: Record<"1" | "2" | "3", Record<number, string>> = {
     "1": {
       0b0000: "frac{}{}",
@@ -151,7 +141,6 @@ function snippetToDescription(key: "1" | "2" | "3", nibble: number) {
     },
   };
 
-  // Use nibble as key safely with 'as number'
   return descriptions[key]?.[nibble] ?? "No description";
 }
 
@@ -239,7 +228,6 @@ function sendUpdateToPanel() {
     let multiplier = 1;
     for (let bit = 0; bit < 4; bit++) {
       if ((movementNibble & (1 << bit)) !== 0) {
-        // Multiply by 2^(bit+1) to match your original scale (j=2, k=4, etc)
         multiplier *= Math.pow(2, bit + 1);
       }
     }
@@ -276,7 +264,6 @@ const handleNormalKey = vscode.commands.registerCommand(
 
 
     if (currentMode !== Mode.Normal && currentMode !== Mode.Highlight) {
-      // In Default mode, do nothing (let VSCode handle keys normally)
       if (currentMode === Mode.Default) return;
     }
 
@@ -297,19 +284,16 @@ const handleNormalKey = vscode.commands.registerCommand(
       }
     }
 
-    // Toggle snippet nibble bits (p,o,i,u)
     if (["p", "o", "i", "u"].includes(key)) {
       await toggleSnippetNibbleBit(key as NibbleBit);
       return;
     }
 
-    // Toggle movement nibble bits (j,k,l,;)
     if (["j", "k", "l", ";"].includes(key)) {
       await toggleMovementNibbleBit(key as ModifierKey);
       return;
     }
 
-    // Movement keys use combined movement nibble multiplier
     if (movementKeys.has(key)) {
       const multiplier = getMovementMultiplier();
       switch (key) {
@@ -330,7 +314,6 @@ const handleNormalKey = vscode.commands.registerCommand(
       return;
     }
 
-    // Handle other keys and snippet insertions
     switch (key) {
       case "w":
         await moveCursorCommand("Up", 1, select);
@@ -352,20 +335,15 @@ const handleNormalKey = vscode.commands.registerCommand(
 
 case "c": {
   if (currentMode === Mode.Normal) {
-    // Copy entire current line regardless of selection
     const line = editor.document.lineAt(editor.selection.active.line);
     const lineRange = line.range;
 
-    // Temporarily select entire line
     editor.selection = new vscode.Selection(lineRange.start, lineRange.end);
 
-    // Copy action
     await vscode.commands.executeCommand("editor.action.clipboardCopyAction");
 
-    // Restore cursor position (move cursor to line start to avoid confusion)
     editor.selection = new vscode.Selection(lineRange.start, lineRange.start);
   } else if (currentMode === Mode.Highlight) {
-    // Copy only what's highlighted
     if (!editor.selection.isEmpty) {
       await vscode.commands.executeCommand("editor.action.clipboardCopyAction");
     }
@@ -379,19 +357,14 @@ case "c": {
 
 case "x": {
   if (currentMode === Mode.Normal) {
-    // Cut entire current line regardless of selection
     const line = editor.document.lineAt(editor.selection.active.line);
     const lineRange = line.rangeIncludingLineBreak;
 
-    // Temporarily select entire line including line break
     editor.selection = new vscode.Selection(lineRange.start, lineRange.end);
 
-    // Cut action
     await vscode.commands.executeCommand("editor.action.clipboardCutAction");
 
-    // After cutting, selection collapses to the previous position
   } else if (currentMode === Mode.Highlight) {
-    // Cut only what's highlighted
     if (!editor.selection.isEmpty) {
       await vscode.commands.executeCommand("editor.action.clipboardCutAction");
     }
@@ -423,7 +396,7 @@ case "x": {
         break;
       }
 
-      case "1": { // LaTeX snippets
+      case "1": {
         currentSnippetKey = "1";
         const snippet = latexSnippetsByNibble[nibbleState];
         if (snippet) {
@@ -439,7 +412,7 @@ case "x": {
         break;
       }
 
-      case "2": { // C++ snippets
+      case "2": {
         currentSnippetKey = "2";
         const snippet = cppSnippetsByNibble[nibbleState];
         if (snippet) {
@@ -455,7 +428,7 @@ case "x": {
         break;
       }
 
-      case "3": { // Rust snippets
+      case "3": {
         currentSnippetKey = "3";
         const snippet = rustSnippetsByNibble[nibbleState];
         if (snippet) {
@@ -641,7 +614,6 @@ case "x": {
           case 'highlight': modeEl.classList.add('highlight'); break;
         }
 
-        // snippet nibble bits update
         for (let i=0; i<4; i++) {
           const bitBox = document.getElementById('bit'+i);
           if ((message.nibble & (1 << i)) !== 0) {
@@ -651,7 +623,6 @@ case "x": {
           }
         }
 
-        // movement nibble bits update
         const moveClasses = ['set-move-j','set-move-k','set-move-l','set-move-semi'];
         const multiplierEl = document.getElementById('movementMultiplier');
         multiplierEl.textContent = "×" + (message.movementMultiplier || 1);
@@ -665,7 +636,6 @@ case "x": {
           }
         }
 
-        // Update hint HTML (safe because you control the source)
         document.getElementById('hintText').innerHTML = message.hintHtml || "No hints available.";
       }
     });
@@ -682,10 +652,8 @@ case "x": {
     updateCursorStyle(editor, currentMode);
   });
 
-  // Automatically create and show the panel on activation (optional)
   createModePanel(context);
 
-  // Initialize UI
   setMode(currentMode);
   updateStatus();
 }
